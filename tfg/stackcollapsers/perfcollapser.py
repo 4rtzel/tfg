@@ -13,7 +13,7 @@ Read more here: https://github.com/brendangregg/FlameGraph/blob/master/stackcoll
 """
 
 from itertools import takewhile
-from tfg.stackcollapsers.stackcollapser import StackCollapser, StackCollapserException
+from tfg.stackcollapsers.stackcollapser import StackCollapser, StackCollapserException, trim_offset
 
 class PerfCollapser(StackCollapser):
     def __init__(self, input_file):
@@ -43,7 +43,7 @@ class PerfCollapser(StackCollapser):
                     raise StackCollapserException('Failed to parse line {}'.format(i))
             else:
                 try:
-                    stack.append(extract_stack_name(fields))
+                    stack.append(trim_offset(extract_stack_name(fields)))
                 except IndexError:
                     raise StackCollapserException('Failed to parse line {}'.format(i))
         return result

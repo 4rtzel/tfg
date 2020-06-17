@@ -11,7 +11,7 @@ class CallFrameNode(object):
     count - samle count for all children. Useful to calculate the 'weight' of the node.
     """
 
-    def __init__(self, name, frames=None, base_count=0, count=0):
+    def __init__(self, name, frames=None, base_count=0, count=0, parent=None):
         """__init__(self, name: str, frames: list[CallFrameNode], base_count: int, count: int)
         """
         self.name = name
@@ -21,6 +21,7 @@ class CallFrameNode(object):
             self.frames = frames[:]
         self.base_count = base_count
         self.count = count
+        self.parent = parent
 
     def __repr__(self):
         return 'CallFrameNode(name={}, base_count={}, count={})'.format(
@@ -94,5 +95,5 @@ class CallFrameTree(object):
             if frame.name == frames[0]:
                 return frame
         else:
-            start_frame.frames.append(CallFrameNode(frames[0]))
+            start_frame.frames.append(CallFrameNode(frames[0], parent=start_frame))
             return start_frame.frames[-1]

@@ -155,7 +155,17 @@ class StatusWindow(BrowserWindow):
 
     def draw(self):
         if self._context.current_vf.cf is not None:
-            name = fit_string(self._context.current_vf.cf.name, self._width - 1, ' ')
+            cf = self._context.current_vf.cf
+            parent = cf.parent or cf
+            self_time_total = int(cf.base_count * 100 / self._context.vft._call_tree.head.count)
+            combined_time_total = int(cf.count * 100 / self._context.vft._call_tree.head.count)
+            self_time_parent = int(cf.base_count * 100 / parent.count)
+            combined_time_parent = int(cf.count * 100 / parent.count)
+            name = fit_string(
+                "%s self=%s%% aggregate=%s%% self/parent=%s%% aggregate/parent=%s%%" %
+                (self._context.current_vf.cf.name, self_time_total, self_time_parent, combined_time_total,
+                 combined_time_parent),
+                self._width - 1, ' ')
         else:
             name = self._context.current_vf.text
         self._win.addstr(0, 0, name)

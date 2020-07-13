@@ -11,6 +11,7 @@ from tfg.calltree.calltree import CallFrameTree
 from tfg.stackcollapsers.stackcollapser import StackCollapser
 from tfg.stackcollapsers.dtracecollapser import DtraceCollapser
 from tfg.stackcollapsers.perfcollapser import PerfCollapser
+from tfg.stackcollapsers.pyspycollapser import PySpyCollapser
 from tfg.browser.terminal import TerminalBrowser
 from tfg.browser.palette import PALETTES
 
@@ -19,6 +20,7 @@ COLLAPSERS = {
     'none': StackCollapser,
     'dtrace': DtraceCollapser,
     'perf': PerfCollapser,
+    'pyspy': PySpyCollapser,
 }
 
 
